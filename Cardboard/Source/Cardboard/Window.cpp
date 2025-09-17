@@ -1,4 +1,6 @@
-#include "glad/gl.h"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
 #include "Window.hpp"
 #include "Logger.hpp"
 
@@ -33,13 +35,13 @@ namespace Cardboard
 
 		glfwMakeContextCurrent(m_Handle);
 
-		int version = gladLoadGL(glfwGetProcAddress);
+		int version = gladLoadGL();
 		if (version == 0) {
 			CARDBOARD_ERROR("Failed to load GLAD");
 			return;
 		}
 		CARDBOARD_TRACE("Init GLAD");
-		CARDBOARD_INFO("Loaded OpenGL v{0}.{1}", GLAD_VERSION_MAJOR(version), GLAD_VERSION_MINOR(version));
+		CARDBOARD_INFO("Loaded OpenGL v{0}", version);
 
 		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glfwSwapInterval(1); // VSync by default
