@@ -2,9 +2,17 @@
 
 A really bad 2d game engine :P
 
-Todo
+**Attributions**  
+- [TheCherno + Hazel](https://www.youtube.com/@thecherno):
+    - API ideas
+    - Layer system
 
+**Libraries**  
+- [GLFW](https://www.glfw.org/)
+
+**Todo**
 - [x] Layer system
+- [ ] Add GLAD
 - [ ] Event system
 - [ ] Proper logging
     - [ ] Logging should only be enabled in debug builds
