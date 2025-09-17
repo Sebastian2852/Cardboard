@@ -2,6 +2,13 @@
 
 A really bad 2d game engine :P
 
+Todo
+
+- [ ] Layer system
+- [ ] Event system
+- [ ] Proper logging
+    - [ ] Logging should only be enabled in debug builds
+
 ## Usage
 
 Cardboard comes with a sample `Game` project which you can use to see how it works.
