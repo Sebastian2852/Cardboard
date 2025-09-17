@@ -15,7 +15,7 @@ A really bad 2d game engine :P
 - [x] Add GLAD
 - [ ] Event system
 - [x] Proper logging
-    - [ ] Logging should only be enabled in debug builds
+    - [x] Logging should only be enabled in debug builds
 
 ## Usage
 

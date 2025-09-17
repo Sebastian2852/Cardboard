@@ -14,11 +14,15 @@ namespace Cardboard
 
 		s_EngineLogger = spdlog::stderr_color_mt("CARDBOARD");
 		s_EngineLogger->set_level(spdlog::level::trace);
-		s_EngineLogger->info("Engine logger ready");
+		#ifdef CB_DEBUG
+				s_EngineLogger->info("Engine logger ready");
+		#endif
 
 		s_AppLogger = spdlog::stderr_color_mt("APP");
 		s_AppLogger->set_level(spdlog::level::trace);
-		s_AppLogger->info("App logger ready");
+		#ifdef CB_DEBUG
+				s_AppLogger->info("App logger ready");
+		#endif
 	}
 
 }
