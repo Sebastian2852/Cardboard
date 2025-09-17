@@ -14,6 +14,7 @@ outputdir = OUTPUT_DIR -- Support for TheCherno's premake files
 group "Engine/Deps"
 
 include "Cardboard/Vendor/glfw"
+include "Cardboard/Vendor/glad"
 
 group ""
 

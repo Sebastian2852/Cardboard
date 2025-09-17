@@ -1,3 +1,4 @@
+#include "glad/gl.h"
 #include "Window.hpp"
 
 #include <iostream>
@@ -28,10 +29,17 @@ namespace Cardboard
 		}
 
 		glfwMakeContextCurrent(m_Handle);
-		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 
-		// VSync by default
-		glfwSwapInterval(1);
+		int version = gladLoadGL(glfwGetProcAddress);
+		if (version == 0) {
+			std::cerr << "Failed to initialize OpenGL context" << std::endl;
+			return;
+		}
+		std::cout << "Loaded OpenGL " << GLAD_VERSION_MAJOR(version) << "." << GLAD_VERSION_MINOR(version) << std::endl;
+
+		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+		glfwSwapInterval(1); // VSync by default
+
 	}
 
 	void Window::Destroy()

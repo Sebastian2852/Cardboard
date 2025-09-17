@@ -16,12 +16,14 @@ project "Cardboard"
     includedirs
     {
         "Source",
-        "Vendor/glfw/include"
+        "Vendor/glfw/include",
+        "Vendor/glad/include"
     }
 
     links
     {
         "GLFW",
+        "glad",
         "opengl32.lib"
     }
 
