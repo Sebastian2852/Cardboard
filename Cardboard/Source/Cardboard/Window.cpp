@@ -9,6 +9,11 @@ namespace Cardboard
 		: m_Width(width), m_Height(height), m_Title(title)
 	{}
 
+	Window::~Window()
+	{
+		Destroy();
+	}
+
 	void Window::Create()
 	{
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
@@ -27,6 +32,12 @@ namespace Cardboard
 
 		// VSync by default
 		glfwSwapInterval(1);
+	}
+
+	void Window::Destroy()
+	{
+		glfwDestroyWindow(m_Handle);
+		glfwTerminate();
 	}
 
 	void Window::Update()

@@ -11,8 +11,11 @@ namespace Cardboard
 	{
 	public:
 		Window(uint32_t width, uint32_t height, std::string title);
+		~Window();
+
 		void Create();
 		void Update();
+		void Destroy();
 
 		bool ShouldClose();
 	private:
