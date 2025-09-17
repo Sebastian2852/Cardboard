@@ -17,7 +17,8 @@ project "Cardboard"
     {
         "Source",
         "Vendor/glfw/include",
-        "Vendor/glad/include"
+        "Vendor/glad/include",
+		"%{wks.location}/Cardboard/Vendor/spdlog/include",
     }
 
     links

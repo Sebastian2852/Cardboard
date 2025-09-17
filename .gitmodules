@@ -1,3 +1,6 @@
 [submodule "Cardboard/Vendor/glfw"]
 	path = Cardboard/Vendor/glfw
 	url = https://github.com/TheCherno/glfw
+[submodule "Cardboard/Vendor/spdlog"]
+	path = Cardboard/Vendor/spdlog
+	url = https://github.com/gabime/spdlog

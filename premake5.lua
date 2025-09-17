@@ -8,6 +8,11 @@ workspace "Cardboard"
         "Release"
     }
 
+    buildoptions
+    {
+        "/utf-8"
+    }
+
 OUTPUT_DIR = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 outputdir = OUTPUT_DIR -- Support for TheCherno's premake files
 

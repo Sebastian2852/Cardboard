@@ -4,7 +4,7 @@
 #include "GLFW/glfw3.h"
 
 void glfwErrorCallback(int error, const char* description) {
-	std::cerr << "GLFW Error (" << error << "): " << description << std::endl;
+	CARDBOARD_CRITICAL("GLFW error {0}: {1}", error, description);
 }
 
 namespace Cardboard
@@ -17,29 +17,37 @@ namespace Cardboard
 	{
 		s_Application = this;
 
+		Logger::Init();
+
 		glfwSetErrorCallback(glfwErrorCallback);
 		int didInitGlfw = glfwInit();
+		CARDBOARD_TRACE("Init GLFW");
 
 		if (!didInitGlfw)
 		{
-			std::cerr << "Failed to init glfw" << std::endl;
-			__debugbreak();
+			CARDBOARD_CRITICAL("Failed to init GLFW");
 		}
 
 		m_Window = std::make_shared<Window>(spec.WindowWidth, spec.WindowHeight, spec.WindowName);
 		m_Window->Create();
+
+		CARDBOARD_TRACE("Application ready");
 	}
 
 	Application::~Application()
 	{
+		CARDBOARD_TRACE("Destroying application");
 		s_Application = nullptr;
 		m_Window->Destroy();
 		glfwTerminate();
+		CARDBOARD_TRACE("GLFW terminated");
+		CARDBOARD_INFO("Application destroyed");
 	}
 
 	void Application::Run()
 	{
 		float lastTime = 0.0f;
+		CARDBOARD_TRACE("Starting application loop");
 
 		while (m_Running)
 		{

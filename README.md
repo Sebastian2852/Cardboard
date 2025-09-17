@@ -14,7 +14,7 @@ A really bad 2d game engine :P
 - [x] Layer system
 - [x] Add GLAD
 - [ ] Event system
-- [ ] Proper logging
+- [x] Proper logging
     - [ ] Logging should only be enabled in debug builds
 
 ## Usage

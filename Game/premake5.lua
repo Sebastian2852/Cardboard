@@ -17,6 +17,7 @@ project "Game"
 	{
 		"%{wks.location}/Cardboard/Source",
 		"%{wks.location}/Cardboard/Vendor/glfw/include",
+		"%{wks.location}/Cardboard/Vendor/spdlog/include",
 	}
 
 	links

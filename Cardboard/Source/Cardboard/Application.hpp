@@ -2,6 +2,7 @@
 
 #include "Window.hpp"
 #include "Layer.hpp"
+#include "Logger.hpp"
 
 #include <string>
 #include <memory>
@@ -28,7 +29,9 @@ namespace Cardboard {
 		requires(std::is_base_of_v<Layer, T>)
 		void PushLayer()
 		{
-			m_LayerStack.push_back(std::make_unique<T>());
+			std::unique_ptr<Layer> newLayer = std::make_unique<T>();
+			CARDBOARD_TRACE("New layer pushed to stack: {0}", newLayer->GetDebugName());
+			m_LayerStack.push_back(std::move(newLayer));
 		}
 
 		static Application& Get();
