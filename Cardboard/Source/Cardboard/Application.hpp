@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Window.hpp"
+
 #include <string>
 #include <memory>
 
@@ -22,6 +24,7 @@ namespace Cardboard {
 
 		static Application& Get();
 	private:
+		std::shared_ptr<Window> m_Window;
 		ApplicationSpec m_Spec;
 
 		bool m_Running = true;

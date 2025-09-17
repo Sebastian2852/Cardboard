@@ -15,7 +15,14 @@ project "Cardboard"
 
     includedirs
     {
-        "Source"
+        "Source",
+        "Vendor/glfw/include"
+    }
+
+    links
+    {
+        "GLFW",
+        "opengl32.lib"
     }
 
     filter "configurations:Debug"

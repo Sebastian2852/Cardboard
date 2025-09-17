@@ -16,6 +16,7 @@ project "Game"
 	includedirs
 	{
 		"%{wks.location}/Cardboard/Source",
+		"%{wks.location}/Cardboard/Vendor/glfw/include",
 	}
 
 	links

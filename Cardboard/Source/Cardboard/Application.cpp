@@ -1,6 +1,11 @@
 #include "Application.hpp"
 
 #include <iostream>
+#include "GLFW/glfw3.h"
+
+void glfwErrorCallback(int error, const char* description) {
+	std::cerr << "GLFW Error (" << error << "): " << description << std::endl;
+}
 
 namespace Cardboard
 {
@@ -11,6 +16,18 @@ namespace Cardboard
 		: m_Spec(spec)
 	{
 		s_Application = this;
+
+		glfwSetErrorCallback(glfwErrorCallback);
+		int didInitGlfw = glfwInit();
+
+		if (!didInitGlfw)
+		{
+			std::cerr << "Failed to init glfw" << std::endl;
+			__debugbreak();
+		}
+
+		m_Window = std::make_shared<Window>(spec.WindowWidth, spec.WindowHeight, spec.WindowName);
+		m_Window->Create();
 	}
 
 	Application::~Application()
@@ -22,7 +39,12 @@ namespace Cardboard
 	{
 		while (m_Running)
 		{
-			std::cout << "Running..." << std::endl;
+			m_Window->Update();
+			
+			if (m_Window->ShouldClose())
+			{
+				m_Running = false;
+			}
 		}
 	}
 
