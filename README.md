@@ -12,7 +12,7 @@ A really bad 2d game engine :P
 
 **Todo**
 - [x] Layer system
-- [ ] Add GLAD
+- [x] Add GLAD
 - [ ] Event system
 - [ ] Proper logging
     - [ ] Logging should only be enabled in debug builds
