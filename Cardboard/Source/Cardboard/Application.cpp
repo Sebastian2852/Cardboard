@@ -38,14 +38,30 @@ namespace Cardboard
 
 	void Application::Run()
 	{
+		float lastTime = 0.0f;
+
 		while (m_Running)
 		{
-			m_Window->Update();
-			
+			// TODO:
+			// maybe clean this up to just loop based of should close instead of this
 			if (m_Window->ShouldClose())
 			{
 				m_Running = false;
+				break;
 			}
+
+			float currentTime = glfwGetTime();
+			float deltaTime = currentTime - lastTime;
+			lastTime = currentTime;
+
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+				layer->OnUpdate(deltaTime);
+
+			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+				layer->OnRender();
+
+			m_Window->Update();
+			
 		}
 	}
 

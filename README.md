@@ -4,7 +4,7 @@ A really bad 2d game engine :P
 
 Todo
 
-- [ ] Layer system
+- [x] Layer system
 - [ ] Event system
 - [ ] Proper logging
     - [ ] Logging should only be enabled in debug builds
