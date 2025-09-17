@@ -33,6 +33,7 @@ namespace Cardboard
 	Application::~Application()
 	{
 		s_Application = nullptr;
+		m_Window->Destroy();
 		glfwTerminate();
 	}
 
@@ -61,7 +62,6 @@ namespace Cardboard
 				layer->OnRender();
 
 			m_Window->Update();
-			
 		}
 	}
 

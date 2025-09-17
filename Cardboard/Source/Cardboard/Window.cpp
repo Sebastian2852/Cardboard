@@ -36,7 +36,11 @@ namespace Cardboard
 
 	void Window::Destroy()
 	{
-		glfwDestroyWindow(m_Handle);
+		if (m_Handle)
+		{
+			glfwDestroyWindow(m_Handle);
+			m_Handle = nullptr;
+		}
 	}
 
 	void Window::Update()
