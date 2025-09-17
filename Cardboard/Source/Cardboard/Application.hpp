@@ -11,9 +11,9 @@ namespace Cardboard {
 
 	struct ApplicationSpec
 	{
-		std::string WindowName;
-		uint32_t WindowHeight;
-		uint32_t WindowWidth;
+		std::string WindowName = "Cardboard Engine";
+		uint32_t WindowHeight = 1280;
+		uint32_t WindowWidth = 720;
 	};
 
 
