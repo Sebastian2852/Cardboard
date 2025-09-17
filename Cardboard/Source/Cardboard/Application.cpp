@@ -33,6 +33,7 @@ namespace Cardboard
 	Application::~Application()
 	{
 		s_Application = nullptr;
+		glfwTerminate();
 	}
 
 	void Application::Run()
