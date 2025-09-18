@@ -16,6 +16,7 @@ project "Game"
 	includedirs
 	{
 		"%{wks.location}/Cardboard/Source",
+        "%{wks.location}/Cardboard/Source/Cardboard",
         "%{wks.location}/Cardboard/Vendor/glad/include",
 		"%{wks.location}/Cardboard/Vendor/glfw/include",
 		"%{wks.location}/Cardboard/Vendor/spdlog/include",

@@ -16,6 +16,7 @@ project "Cardboard"
     includedirs
     {
         "Source",
+        "Source/Cardboard",
         "Vendor/glfw/include",
         "Vendor/glad/include",
 		"%{wks.location}/Cardboard/Vendor/spdlog/include",

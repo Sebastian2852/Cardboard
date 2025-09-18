@@ -30,6 +30,47 @@ namespace Cardboard
 
 		m_Window = std::make_shared<Window>(spec.WindowWidth, spec.WindowHeight, spec.WindowName);
 		m_Window->Create();
+		CARDBOARD_TRACE("Created window");
+
+		std::string vertexSource = R"(
+			#version 460 core
+
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec3 a_Color;
+
+			out vec3 o_Position;
+			out vec3 o_VertexColor;
+
+			void main()
+			{
+				float x = a_Position.x * 2.0 - 1.0;
+				float y = 1.0 - a_Position.y * 2.0;
+				float z = a_Position.z;
+
+				vec3 clipPos = vec3(x, y, z);
+				gl_Position = vec4(clipPos, 1.0);
+				o_Position = clipPos;
+				o_VertexColor = a_Color;
+			}
+		)";
+
+
+		std::string fragmentSource = R"(
+			#version 460 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec3 o_Position;
+			in vec3 o_VertexColor;
+
+			void main()
+			{
+				color = vec4(o_VertexColor, 1.0);
+			}
+		)";
+
+		m_DefaultShader.reset(new Cardboard::Shader(vertexSource, fragmentSource));
+		CARDBOARD_TRACE("Created default shader");
 
 		CARDBOARD_TRACE("Application ready");
 	}
@@ -69,7 +110,10 @@ namespace Cardboard
 			m_Window->BeginFrame();
 
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+			{
+				m_DefaultShader->Bind();
 				layer->OnRender();
+			}
 
 			m_Window->EndFrame();
 		}

@@ -8,105 +8,33 @@
 class TestLayer : public Cardboard::Layer
 {
 public:
-	TestLayer()
-		: Layer("Test Layer")
-	{
-		//std::cout << "Created Layer" << std::endl;
-		LOG_TRACE("Created testing layer");
+    TestLayer()
+        : Layer("Test Layer"),
+        m_v1(0.25f, 0.75f, 0.0f),
+        m_v2(0.75f, 0.75f, 0.0f),
+        m_v3(0.5f, 0.25f, 0.0f),
+        m_Triangle(m_v1, m_v2, m_v3, Cardboard::Vector3(1, 0, 0))
+    {
+        LOG_TRACE("Created testing layer");
+    }
 
-		glGenVertexArrays(1, &m_VertexArray);
-		glBindVertexArray(m_VertexArray);
+    virtual void OnUpdate(float deltaTime) override
+    {
+        m_v1.y += 0.01f * deltaTime;
+        m_v2.y += 0.01f * deltaTime;
+        m_v3.y += 0.01f * deltaTime;
 
-		glGenBuffers(1, &m_VertexBuffer);
-		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
+        m_Triangle.UpdateVertexPositions(m_v1, m_v2, m_v3);
+    }
 
-		float verticies[3 * 6] = {
-			// POSITION       // COLOR
-			0.25f, 0.75f, 0.0f, 1.0f, 0.0f, 0.0f,
-			0.75f, 0.75f, 0.0f, 0.0f, 1.0f, 0.0f,
-			0.5f, 0.25f, 0.0f, 0.0f, 0.0f, 1.0f
-		};
-
-		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, nullptr);
-
-		glEnableVertexAttribArray(1);
-		glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 6, (void*)(3 * sizeof(float)));
-
-		glGenBuffers(1, &m_IndexBuffer);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
-
-		unsigned int indicies[3] = {
-			0, 1, 2
-		};
-
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
-
-		std::string vertexSource = R"(
-			#version 460 core
-
-			layout(location = 0) in vec3 a_Position;
-			layout(location = 1) in vec3 a_Color;
-
-			out vec3 o_Position;
-			out vec3 o_VertexColor;
-
-			void main()
-			{
-				float x = a_Position.x * 2.0 - 1.0;
-				float y = 1.0 - a_Position.y * 2.0;
-				float z = a_Position.z;
-
-				vec3 clipPos = vec3(x, y, z);
-				gl_Position = vec4(clipPos, 1.0);
-				o_Position = clipPos;
-				o_VertexColor = a_Color;
-			}
-		)";
-
-
-		std::string fragmentSource = R"(
-			#version 460 core
-			
-			layout(location = 0) out vec4 color;
-
-			in vec3 o_Position;
-			in vec3 o_VertexColor;
-
-			void main()
-			{
-				color = vec4(o_VertexColor, 1.0);
-			}
-		)";
-
-		m_Shader.reset(new Cardboard::Shader(vertexSource, fragmentSource));
-	};
-
-	virtual ~TestLayer()
-	{
-		//std::cout << "Destroyed Layer" << std::endl;
-	}
-
-	virtual void OnUpdate(float deltaTime) override
-	{
-		//std::cout << "On update (delta time = " << deltaTime << ")" << std::endl;
-	}
-
-	virtual void OnRender() override
-	{
-		//std::cout << "On Render" << std::endl;
-
-		m_Shader->Bind();
-		glBindVertexArray(m_VertexArray);
-		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
-	}
+    virtual void OnRender() override
+    {
+        m_Triangle.Render();
+    }
 
 private:
-	unsigned int m_VertexArray;
-	unsigned int m_VertexBuffer;
-	unsigned int m_IndexBuffer;
-	std::unique_ptr<Cardboard::Shader> m_Shader;
+    Cardboard::Vector3 m_v1, m_v2, m_v3;
+    Cardboard::Triangle m_Triangle;
 };
 
 int main()

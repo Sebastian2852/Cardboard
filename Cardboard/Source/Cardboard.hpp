@@ -5,3 +5,4 @@
 #include "Cardboard/Logger.hpp"
 
 #include "Cardboard/Renderer/Shader.hpp"
+#include "Cardboard/Renderer/Primitives.hpp"

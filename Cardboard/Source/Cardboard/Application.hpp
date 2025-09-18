@@ -3,6 +3,7 @@
 #include "Window.hpp"
 #include "Layer.hpp"
 #include "Logger.hpp"
+#include "Renderer/Shader.hpp"
 
 #include <string>
 #include <memory>
@@ -38,6 +39,8 @@ namespace Cardboard {
 	private:
 		std::shared_ptr<Window> m_Window;
 		ApplicationSpec m_Spec;
+
+		std::unique_ptr<Cardboard::Shader> m_DefaultShader;
 
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
 
