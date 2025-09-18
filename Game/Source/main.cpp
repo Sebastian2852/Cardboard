@@ -9,6 +9,7 @@ class TestLayer : public Cardboard::Layer
 {
 public:
 	TestLayer()
+		: Layer("Test Layer")
 	{
 		//std::cout << "Created Layer" << std::endl;
 		LOG_TRACE("Created testing layer");
@@ -94,8 +95,6 @@ public:
 	}
 
 private:
-	std::string m_DebugName = "Testing Layer";
-
 	unsigned int m_VertexArray;
 	unsigned int m_VertexBuffer;
 	unsigned int m_IndexBuffer;
@@ -106,8 +105,8 @@ int main()
 {
 	Cardboard::ApplicationSpec spec;
 	spec.WindowName = "Game";
-	spec.WindowWidth = 1920;
-	spec.WindowHeight = 1080;
+	spec.WindowWidth = 500;
+	spec.WindowHeight = 500;
 
 	Cardboard::Application app(spec);
 	app.PushLayer<ChessBoardLayer>();

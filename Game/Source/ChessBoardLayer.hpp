@@ -2,14 +2,11 @@
 #include <Cardboard.hpp>
 #include <vector>
 
-#include "glad/glad.h"
-#include <Cardboard.hpp>
-#include <vector>
-
 class ChessBoardLayer : public Cardboard::Layer
 {
 public:
     ChessBoardLayer()
+        : Layer("Chess board layer")
     {
         LOG_TRACE("Created ChessBoard layer");
 
