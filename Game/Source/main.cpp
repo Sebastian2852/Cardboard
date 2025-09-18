@@ -3,6 +3,8 @@
 
 #include<iostream>
 
+#include "ChessBoardLayer.hpp"
+
 class TestLayer : public Cardboard::Layer
 {
 public:
@@ -109,5 +111,6 @@ int main()
 
 	Cardboard::Application app(spec);
 	app.PushLayer<TestLayer>();
+	//app.PushLayer<ChessBoardLayer>();
 	app.Run();
 }
