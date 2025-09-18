@@ -110,7 +110,7 @@ int main()
 	spec.WindowHeight = 1080;
 
 	Cardboard::Application app(spec);
+	app.PushLayer<ChessBoardLayer>();
 	app.PushLayer<TestLayer>();
-	//app.PushLayer<ChessBoardLayer>();
 	app.Run();
 }
