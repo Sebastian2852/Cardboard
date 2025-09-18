@@ -17,15 +17,15 @@ public:
 		glGenBuffers(1, &m_VertexBuffer);
 		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
-		float verticies[2 * 3] = {
-			-0.5f, -0.5f,
-			0.5f, -0.5f,
-			0.0f, 0.5f,
+		float verticies[3 * 3] = {
+			-0.5f, -0.5f, 0.0f,
+			0.5f, -0.5f, 0.0f,
+			0.0f, 0.5f, 0.0f,
 		};
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
 		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, nullptr);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, nullptr);
 
 		glGenBuffers(1, &m_IndexBuffer);
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_IndexBuffer);
@@ -39,13 +39,13 @@ public:
 		std::string vertexSource = R"(
 			#version 460 core
 			
-			layout(location = 0) in vec2 a_Position;
+			layout(location = 0) in vec3 a_Position;
 
-			out vec2 o_Position;
+			out vec3 o_Position;
 
 			void main()
 			{
-				gl_Position = vec4(a_Position, 0.0, 1.0);
+				gl_Position = vec4(a_Position, 1.0);
 				o_Position = a_Position;
 			}
 		)";
@@ -55,11 +55,11 @@ public:
 			
 			layout(location = 0) out vec4 color;
 
-			in vec2 o_Position;
+			in vec3 o_Position;
 
 			void main()
 			{
-				color = vec4(o_Position * 0.5 + 0.5, 0.5, 1.0);
+				color = vec4(o_Position * 0.5 + 0.5, 1.0);
 			}
 		)";
 
