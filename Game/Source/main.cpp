@@ -1,7 +1,6 @@
 #include "glad/glad.h"
 #include <Cardboard.hpp>
 
-
 #include<iostream>
 
 class TestLayer : public Cardboard::Layer
@@ -36,6 +35,35 @@ public:
 		};
 
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indicies), indicies, GL_STATIC_DRAW);
+
+		std::string vertexSource = R"(
+			#version 460 core
+			
+			layout(location = 0) in vec2 a_Position;
+
+			out vec2 o_Position;
+
+			void main()
+			{
+				gl_Position = vec4(a_Position, 0.0, 1.0);
+				o_Position = a_Position;
+			}
+		)";
+
+		std::string fragmentSource = R"(
+			#version 460 core
+			
+			layout(location = 0) out vec4 color;
+
+			in vec2 o_Position;
+
+			void main()
+			{
+				color = vec4(o_Position * 0.5 + 0.5, 0.5, 1.0);
+			}
+		)";
+
+		m_Shader.reset(new Cardboard::Shader(vertexSource, fragmentSource));
 	};
 
 	virtual ~TestLayer()
@@ -52,6 +80,7 @@ public:
 	{
 		//std::cout << "On Render" << std::endl;
 
+		m_Shader->Bind();
 		glBindVertexArray(m_VertexArray);
 		glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);
 	}
@@ -62,6 +91,7 @@ private:
 	unsigned int m_VertexArray;
 	unsigned int m_VertexBuffer;
 	unsigned int m_IndexBuffer;
+	std::unique_ptr<Cardboard::Shader> m_Shader;
 };
 
 int main()

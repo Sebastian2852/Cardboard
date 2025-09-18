@@ -66,10 +66,12 @@ namespace Cardboard
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(deltaTime);
 
+			m_Window->BeginFrame();
+
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnRender();
 
-			m_Window->Update();
+			m_Window->EndFrame();
 		}
 	}
 

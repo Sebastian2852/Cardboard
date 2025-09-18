@@ -14,7 +14,8 @@ namespace Cardboard
 		~Window();
 
 		void Create();
-		void Update();
+		void BeginFrame();
+		void EndFrame();
 		void Destroy();
 
 		bool ShouldClose();

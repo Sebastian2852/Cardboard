@@ -6,6 +6,11 @@
 
 #include <iostream>
 
+void framebufferSizeCallback(GLFWwindow* window, int width, int heigh)
+{
+	glViewport(0, 0, width, heigh);
+}
+
 namespace Cardboard
 {
 
@@ -43,7 +48,8 @@ namespace Cardboard
 		CARDBOARD_TRACE("Init GLAD");
 		CARDBOARD_INFO("Loaded OpenGL v{0}", version);
 
-		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
+		glfwSetFramebufferSizeCallback(m_Handle, framebufferSizeCallback);
+		glViewport(0, 0, m_Width, m_Height);
 		glfwSwapInterval(1); // VSync by default
 
 		CARDBOARD_INFO("Created a {0} x {1} window called {2}", m_Width, m_Height, m_Title);
@@ -60,9 +66,14 @@ namespace Cardboard
 		}
 	}
 
-	void Window::Update()
+	void Window::BeginFrame()
 	{
+		glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+	}
+
+	void Window::EndFrame()
+	{
 		glfwSwapBuffers(m_Handle);
 		glfwPollEvents();
 	}
