@@ -18,9 +18,9 @@ public:
 		glBindBuffer(GL_ARRAY_BUFFER, m_VertexBuffer);
 
 		float verticies[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			0.5f, -0.5f, 0.0f,
-			0.0f, 0.5f, 0.0f,
+			0.25f, 0.75f, 0.0f,
+			0.75f, 0.75f, 0.0f,
+			0.5f, 0.25f, 0.0f,
 		};
 
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verticies), verticies, GL_STATIC_DRAW);
@@ -38,17 +38,23 @@ public:
 
 		std::string vertexSource = R"(
 			#version 460 core
-			
+
 			layout(location = 0) in vec3 a_Position;
 
 			out vec3 o_Position;
 
 			void main()
 			{
-				gl_Position = vec4(a_Position, 1.0);
-				o_Position = a_Position;
+				float x = a_Position.x * 2.0 - 1.0;
+				float y = 1.0 - a_Position.y * 2.0;
+				float z = a_Position.z;
+
+				vec3 clipPos = vec3(x, y, z);
+				gl_Position = vec4(clipPos, 1.0);
+				o_Position = clipPos;
 			}
 		)";
+
 
 		std::string fragmentSource = R"(
 			#version 460 core
