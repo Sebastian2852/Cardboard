@@ -6,6 +6,7 @@
 #include "Logger.hpp"
 #include "Events/WindowEvents.hpp"
 #include "Events/KeyEvents.hpp"
+#include "Events/MouseEvents.hpp"
 
 #include <iostream>
 
@@ -85,6 +86,23 @@ namespace Cardboard
 				case GLFW_RELEASE:
 				{
 					Application::Get().PushEvent(std::make_unique<KeyReleasedEvent>(key));
+					break;
+				}
+			}
+		});
+
+		glfwSetMouseButtonCallback(m_Handle, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					Application::Get().PushEvent(std::make_unique<MouseButtonPressedEvent>(button));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Application::Get().PushEvent(std::make_unique<MouseButtonReleasedEvent>(button));
 					break;
 				}
 			}
