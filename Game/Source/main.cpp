@@ -32,6 +32,12 @@ public:
         m_Triangle.Render();
     }
 
+    virtual bool OnEvent(Cardboard::BaseEvent& event)
+    {
+        CARDBOARD_WARN(event.ToString());
+        return true;
+    }
+
 private:
     Cardboard::Vector3 m_v1, m_v2, m_v3;
     Cardboard::Triangle m_Triangle;

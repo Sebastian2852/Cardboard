@@ -4,6 +4,7 @@
 #include "Layer.hpp"
 #include "Logger.hpp"
 #include "Renderer/Shader.hpp"
+#include "Events/Event.hpp"
 
 #include <string>
 #include <memory>
@@ -43,6 +44,7 @@ namespace Cardboard {
 		std::unique_ptr<Cardboard::Shader> m_DefaultShader;
 
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
+		std::vector<std::unique_ptr<BaseEvent>> m_EventBuffer;
 
 		bool m_Running = true;
 	};

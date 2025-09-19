@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Events/Event.hpp"
+
 namespace Cardboard {
 
 	class Layer
@@ -11,6 +13,7 @@ namespace Cardboard {
 
 		virtual ~Layer() = default;
 
+		virtual bool OnEvent(BaseEvent& event) { return false; }
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnRender() {}
 

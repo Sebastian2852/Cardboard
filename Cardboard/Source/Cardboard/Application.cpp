@@ -3,6 +3,8 @@
 #include <iostream>
 #include "GLFW/glfw3.h"
 
+#include "Events/WindowEvents.hpp"
+
 void glfwErrorCallback(int error, const char* description) {
 	CARDBOARD_CRITICAL("GLFW error {0}: {1}", error, description);
 }
@@ -92,12 +94,10 @@ namespace Cardboard
 
 		while (m_Running)
 		{
-			// TODO:
-			// maybe clean this up to just loop based of should close instead of this
 			if (m_Window->ShouldClose())
 			{
 				m_Running = false;
-				break;
+				m_EventBuffer.emplace_back(std::make_unique<WindowCloseEvent>());
 			}
 
 			float currentTime = glfwGetTime();
@@ -116,6 +116,25 @@ namespace Cardboard
 			}
 
 			m_Window->EndFrame();
+
+			for (const std::unique_ptr<BaseEvent>& event : m_EventBuffer)
+			{
+				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
+				{
+					bool handled = layer->OnEvent(*event);
+					event->Handled = handled;
+
+					// If this event was handled by this layer we consume it
+					// and dont let any layers under it get that event
+
+					// This means that if you have a button and then under it another button
+					// the top button can consume the click and the one under it wont get a click
+					if (handled)
+						break;
+				}
+
+			}
+
 		}
 	}
 
