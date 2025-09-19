@@ -4,6 +4,7 @@
 #include "Layer.hpp"
 #include "Logger.hpp"
 #include "Renderer/Shader.hpp"
+#include "Events/Event.hpp"
 
 #include <string>
 #include <memory>
@@ -35,6 +36,11 @@ namespace Cardboard {
 			m_LayerStack.push_back(std::move(newLayer));
 		}
 
+		void PushEvent(std::unique_ptr<BaseEvent> event)
+		{
+			m_EventBuffer.push_back(std::move(event));
+		}
+
 		static Application& Get();
 	private:
 		std::shared_ptr<Window> m_Window;
@@ -43,6 +49,7 @@ namespace Cardboard {
 		std::unique_ptr<Cardboard::Shader> m_DefaultShader;
 
 		std::vector<std::unique_ptr<Layer>> m_LayerStack;
+		std::vector<std::unique_ptr<BaseEvent>> m_EventBuffer;
 
 		bool m_Running = true;
 	};
