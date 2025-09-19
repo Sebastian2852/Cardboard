@@ -34,7 +34,7 @@ public:
 
     virtual bool OnEvent(Cardboard::BaseEvent& event)
     {
-        CARDBOARD_WARN(event.ToString());
+        LOG_WARN(event.ToString());
         return true;
     }
 

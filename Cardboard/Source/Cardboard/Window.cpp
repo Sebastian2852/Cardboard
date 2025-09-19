@@ -59,6 +59,19 @@ namespace Cardboard
 			Application::Get().PushEvent(std::make_unique<WindowResizeEvent>(width, height));
 		});
 
+		glfwSetWindowFocusCallback(m_Handle, [](GLFWwindow* window, int focused)
+		{
+			if (focused)
+				Application::Get().PushEvent(std::make_unique<WindowGainFocusEvent>());
+			else
+				Application::Get().PushEvent(std::make_unique<WindowLooseFocusEvent>());
+		});
+
+		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xPos, int yPos)
+		{
+			Application::Get().PushEvent(std::make_unique<WindowMovedEvent>(xPos, yPos));
+		});
+
 		CARDBOARD_INFO("Created a {0} x {1} window called {2}", m_Width, m_Height, m_Title);
 	}
 
