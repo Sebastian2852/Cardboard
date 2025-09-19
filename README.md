@@ -1,34 +1,36 @@
 # Cardboard
 
-A really bad 2d game engine :P
+Cardboard is my first ever game engine, it is not really intended to be used.
 
-**Attributions**  
-- [TheCherno + Hazel](https://www.youtube.com/@thecherno):
-    - API ideas
-    - Layer system
+Libraries used:
+- GLFW
+- Spdlog
 
-**Libraries**  
-- [GLFW](https://www.glfw.org/)
+## Using the engine
 
-**Todo**
+Currently the engine is kind of hard to use, but the easiest would be to clone this project and clean out the `Game` project and you will have a clean slate for your game.
+
+## Contributing
+
+Clone the project
+```sh
+git clone --recursive https://www.github.com/Sebastian2852/Cardboard.git
+```
+
+Then using [Premake](https://github.com/premake/premake-core/) you can create project files.
+Here is an example for visual studio 2022 projects:
+```sh
+premake vs2022
+```
+To see more please see [here](https://premake.github.io/docs/Using-Premake).
+
+---
+
+## Todo
 - [x] Layer system
 - [x] Add GLAD
 - [ ] Event system
 - [x] Proper logging
     - [x] Logging should only be enabled in debug builds
 
-## Usage
-
-Cardboard comes with a sample `Game` project which you can use to see how it works.
-
-## Building
-
-This project uses [Premake](https://github.com/premake/premake-core/) as the build system.
-
-There is a single `premake5.lua` file in charge of building everything. Simply run
-
-```sh
-premake vs2022
-```
-
-to generate visual studio projects. If you need a different type of project see [here](https://premake.github.io/docs/Using-Premake).
+---
