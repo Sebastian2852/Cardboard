@@ -5,6 +5,7 @@
 #include "Window.hpp"
 #include "Logger.hpp"
 #include "Events/WindowEvents.hpp"
+#include "Events/KeyEvents.hpp"
 
 #include <iostream>
 
@@ -70,6 +71,23 @@ namespace Cardboard
 		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xPos, int yPos)
 		{
 			Application::Get().PushEvent(std::make_unique<WindowMovedEvent>(xPos, yPos));
+		});
+
+		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scanCode, int action, int mods)
+		{
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					Application::Get().PushEvent(std::make_unique<KeyPressedEvent>(key));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Application::Get().PushEvent(std::make_unique<KeyReleasedEvent>(key));
+					break;
+				}
+			}
 		});
 
 		CARDBOARD_INFO("Created a {0} x {1} window called {2}", m_Width, m_Height, m_Title);
