@@ -1,8 +1,10 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "Application.hpp"
 #include "Window.hpp"
 #include "Logger.hpp"
+#include "Events/WindowEvents.hpp"
 
 #include <iostream>
 
@@ -51,6 +53,11 @@ namespace Cardboard
 		glfwSetFramebufferSizeCallback(m_Handle, framebufferSizeCallback);
 		glViewport(0, 0, m_Width, m_Height);
 		glfwSwapInterval(1); // VSync by default
+
+		glfwSetWindowSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height)
+		{
+			Application::Get().PushEvent(std::make_unique<WindowResizeEvent>(width, height));
+		});
 
 		CARDBOARD_INFO("Created a {0} x {1} window called {2}", m_Width, m_Height, m_Title);
 	}

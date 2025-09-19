@@ -132,8 +132,9 @@ namespace Cardboard
 					if (handled)
 						break;
 				}
-
 			}
+
+			m_EventBuffer.clear();
 
 		}
 	}
