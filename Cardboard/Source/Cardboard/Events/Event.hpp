@@ -13,8 +13,15 @@ namespace Cardboard
 		MouseButtonPressed, MouseButtonReleased, MouseMoved, MouseScrolled,
 	};
 
-#define GENERATE_EVENT_GETTERS(type) virtual EventType GetType() const override { return EventType::type; }\
-											virtual std::string GetName() const override { return #type; }
+	template<EventType T>
+	struct EventTraits;
+
+#define GENERATE_EVENT_GETTERS(enumVal) static EventType GetStaticType() { return EventType::enumVal; } \
+										virtual EventType GetType() const override { return GetStaticType(); } \
+										virtual std::string GetName() const override { return #enumVal; } \
+										friend struct EventTraits<EventType::enumVal>;
+
+#define REGISTER_EVENT_TYPE(className, enumValue) template <> struct EventTraits<EventType::enumValue> { using type = className; }
 
 	class BaseEvent
 	{

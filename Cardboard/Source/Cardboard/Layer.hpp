@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Events/Event.hpp"
+#include "Application.hpp"
+#include "Events/EventBus.hpp"
 
 namespace Cardboard {
 
@@ -10,16 +11,17 @@ namespace Cardboard {
 		Layer(std::string name = "UnnamedLayer")
 			: m_DebugName(name)
 		{}
-
 		virtual ~Layer() = default;
 
-		virtual bool OnEvent(BaseEvent& event) { return false; }
+		virtual void OnStart() {}
 		virtual void OnUpdate(float deltaTime) {}
 		virtual void OnRender() {}
 
 		const std::string& GetDebugName() const { return m_DebugName; }
 	protected:
 		std::string m_DebugName = "UnnamedLayer";
+		EventBus* m_EventBus = nullptr;
+		friend class Application;
 	};
 
 }

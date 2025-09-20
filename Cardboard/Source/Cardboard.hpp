@@ -5,6 +5,7 @@
 #include "Cardboard/Logger.hpp"
 
 #include "Events/Event.hpp"
+#include "Events/WindowEvents.hpp"
 #include "Util/Keycodes.hpp"
 
 #include "Cardboard/Renderer/Shader.hpp"

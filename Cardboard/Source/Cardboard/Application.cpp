@@ -107,35 +107,21 @@ namespace Cardboard
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(deltaTime);
 
-			m_Window->BeginFrame();
 
+			m_Window->BeginFrame();
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 			{
 				m_DefaultShader->Bind();
 				layer->OnRender();
 			}
-
 			m_Window->EndFrame();
+
 
 			for (const std::unique_ptr<BaseEvent>& event : m_EventBuffer)
 			{
-				for (const std::unique_ptr<Layer>& layer : m_LayerStack)
-				{
-					bool handled = layer->OnEvent(*event);
-					event->Handled = handled;
-
-					// If this event was handled by this layer we consume it
-					// and dont let any layers under it get that event
-
-					// This means that if you have a button and then under it another button
-					// the top button can consume the click and the one under it wont get a click
-					if (handled)
-						break;
-				}
+				m_EventBus.Dispatch(*event);
 			}
-
 			m_EventBuffer.clear();
-
 		}
 	}
 

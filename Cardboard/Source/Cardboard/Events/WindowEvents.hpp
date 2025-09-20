@@ -3,6 +3,7 @@
 #include "Event.hpp"
 #include <memory>
 #include <string>
+#include <sstream>
 
 namespace Cardboard
 {
@@ -17,6 +18,8 @@ namespace Cardboard
 	public:
 		GENERATE_EVENT_GETTERS(WindowGainFocus)
 	};
+
+	REGISTER_EVENT_TYPE(WindowGainFocusEvent, WindowGainFocus);
 
 	class WindowLooseFocusEvent : public BaseEvent
 	{
