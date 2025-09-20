@@ -3,6 +3,8 @@
 #include <iostream>
 #include "GLFW/glfw3.h"
 
+#include "Events/WindowEvents.hpp"
+
 void glfwErrorCallback(int error, const char* description) {
 	CARDBOARD_CRITICAL("GLFW error {0}: {1}", error, description);
 }
@@ -92,12 +94,10 @@ namespace Cardboard
 
 		while (m_Running)
 		{
-			// TODO:
-			// maybe clean this up to just loop based of should close instead of this
 			if (m_Window->ShouldClose())
 			{
 				m_Running = false;
-				break;
+				m_EventBuffer.emplace_back(std::make_unique<WindowCloseEvent>());
 			}
 
 			float currentTime = glfwGetTime();
@@ -107,15 +107,21 @@ namespace Cardboard
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 				layer->OnUpdate(deltaTime);
 
-			m_Window->BeginFrame();
 
+			m_Window->BeginFrame();
 			for (const std::unique_ptr<Layer>& layer : m_LayerStack)
 			{
 				m_DefaultShader->Bind();
 				layer->OnRender();
 			}
-
 			m_Window->EndFrame();
+
+
+			for (const std::unique_ptr<BaseEvent>& event : m_EventBuffer)
+			{
+				m_EventBus.Dispatch(*event);
+			}
+			m_EventBuffer.clear();
 		}
 	}
 

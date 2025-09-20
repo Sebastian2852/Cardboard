@@ -1,8 +1,12 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
+#include "Application.hpp"
 #include "Window.hpp"
 #include "Logger.hpp"
+#include "Events/WindowEvents.hpp"
+#include "Events/KeyEvents.hpp"
+#include "Events/MouseEvents.hpp"
 
 #include <iostream>
 
@@ -51,6 +55,58 @@ namespace Cardboard
 		glfwSetFramebufferSizeCallback(m_Handle, framebufferSizeCallback);
 		glViewport(0, 0, m_Width, m_Height);
 		glfwSwapInterval(1); // VSync by default
+
+		glfwSetWindowSizeCallback(m_Handle, [](GLFWwindow* window, int width, int height)
+		{
+			Application::Get().PushEvent(std::make_unique<WindowResizeEvent>(width, height));
+		});
+
+		glfwSetWindowFocusCallback(m_Handle, [](GLFWwindow* window, int focused)
+		{
+			if (focused)
+				Application::Get().PushEvent(std::make_unique<WindowGainFocusEvent>());
+			else
+				Application::Get().PushEvent(std::make_unique<WindowLooseFocusEvent>());
+		});
+
+		glfwSetWindowPosCallback(m_Handle, [](GLFWwindow* window, int xPos, int yPos)
+		{
+			Application::Get().PushEvent(std::make_unique<WindowMovedEvent>(xPos, yPos));
+		});
+
+		glfwSetKeyCallback(m_Handle, [](GLFWwindow* window, int key, int scanCode, int action, int mods)
+		{
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					Application::Get().PushEvent(std::make_unique<KeyPressedEvent>(key));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Application::Get().PushEvent(std::make_unique<KeyReleasedEvent>(key));
+					break;
+				}
+			}
+		});
+
+		glfwSetMouseButtonCallback(m_Handle, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			switch (action)
+			{
+				case GLFW_PRESS:
+				{
+					Application::Get().PushEvent(std::make_unique<MouseButtonPressedEvent>(button));
+					break;
+				}
+				case GLFW_RELEASE:
+				{
+					Application::Get().PushEvent(std::make_unique<MouseButtonReleasedEvent>(button));
+					break;
+				}
+			}
+		});
 
 		CARDBOARD_INFO("Created a {0} x {1} window called {2}", m_Width, m_Height, m_Title);
 	}

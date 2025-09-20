@@ -4,5 +4,9 @@
 #include "Cardboard/Layer.hpp"
 #include "Cardboard/Logger.hpp"
 
+#include "Events/Event.hpp"
+#include "Events/WindowEvents.hpp"
+#include "Util/Keycodes.hpp"
+
 #include "Cardboard/Renderer/Shader.hpp"
 #include "Cardboard/Renderer/Primitives.hpp"

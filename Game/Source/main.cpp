@@ -18,6 +18,14 @@ public:
         LOG_TRACE("Created testing layer");
     }
 
+    virtual void OnStart() override
+    {
+        m_EventBus->Connect<Cardboard::EventType::WindowGainFocus>([](const Cardboard::WindowGainFocusEvent& e)
+        {
+            LOG_WARN(e.ToString());
+        });
+    }
+
     virtual void OnUpdate(float deltaTime) override
     {
         m_v1.y += 0.01f * deltaTime;
